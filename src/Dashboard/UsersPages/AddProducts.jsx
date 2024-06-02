@@ -12,36 +12,62 @@ const AddProducts = () => {
 
     const { user } = useContext(AuthContext)
 
-    const handlesubmit = (event) => {
+    const handlesubmit = async (event) => {
         event.preventDefault();
         const form = event.target;
 
-        const name = form.name.value;
-        const detils = form.detils.value;
-        const image = form.image.value;
-        const OwnerName = user.displayName;
-        const OwnerEmail = user.email;
-        const OwnerImage = user.photoURL;
-        const item = { name, detils, image, OwnerName, OwnerEmail, OwnerImage }
-        console.log(item)
 
-        axios.post('https://server-electronic-item-repairing-services.vercel.app/AddService', item, { withCredentials: true })
-            .then(res => {
-                console.log(res.data)
-                if (res.data.insertedId) {
-                    form.reset();
-                    Swal.fire({
-                        title: 'Success !',
-                        text: 'Service Added Successfully',
-                        icon: 'success',
-                        confirmButtonText: 'Ok'
-                    })
-                }
-            })
+        const Image = form.image.files[0];
+        console.log(Image)
+        console.log(ImgBBApi)
+
+        const formData = new FormData();
+        // console.log(formData)
+        formData.append("image", Image);
+        console.log(formData.append)
+        const res = await axios.post(ImgBBApi, formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        if (res.data.success && res.data.data.url) {
+            const name = form.name.value;
+            const image = res.data.data.url;
+            const detils = form.detils.value;
+            const OwnerName = user.displayName;
+            const OwnerEmail = user.email;
+            const OwnerImage = user.photoURL;
+            const item = { name, detils, image, OwnerName, OwnerEmail, OwnerImage }
+            console.log(item)
+
+            axios.post('/', item,)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.insertedId) {
+                        form.reset();
+                        Swal.fire({
+                            title: 'Success !',
+                            text: 'Service Added Successfully',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        })
+                    }
+                })
+        }
 
 
-
-
+        // const response = await axios.post(
+        //     'https://api.cloudinary.com/v1_1/dczzan7us/image/upload', formData, {
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data'
+        //     },
+        //     auth: {
+        //         username: '788574336458564',
+        //         password: '23N6RtNkRYQuthVOTIaJAHCfaOw'
+        //     }
+        // }
+        // );
+        // console.log(response)
     }
 
 
@@ -56,7 +82,7 @@ const AddProducts = () => {
 
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Image</h2>
-                        <input type="file" className="file-inpu file-input-bordered w-full" />
+                        <input type="file" name='image' required className="file-inpu file-input-bordered w-full" />
                     </div>
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Name</h2>

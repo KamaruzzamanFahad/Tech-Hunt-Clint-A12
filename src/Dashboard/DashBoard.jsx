@@ -10,10 +10,14 @@ import { FaShoppingBag } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { CiForkAndKnife } from "react-icons/ci";
 import { ImSpoonKnife } from "react-icons/im";
+import { CgProfile } from "react-icons/cg";
+import { AiFillProduct } from "react-icons/ai";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 // import useAdmin from "../hooks/useAdmin";
 
 const DashBoard = () => {
-
+  const {user} = useContext(AuthContext)
   // const [Admina, refetch] = useAdmin();
   const isAdmin = false;
   // console.log(Admina);
@@ -21,11 +25,11 @@ const DashBoard = () => {
 
   return (
     <div className="flex">
-      <div className="w-96 cinzel bg-[#ffe6a1] p-10 bashbord h-[100vh]">
-        <div className="w-full flex flex-col gap-1 justify-center items-center">
-          <img src="/techhunt.png" alt="" className="w-36" />
-          <h1 className="text-4xl">USER</h1>
-          <p>email</p>
+      <div className="w-72 cinzel bg-[#ffe6a1] p-10 bashbord h-[100vh]">
+        <div className="w-full flex flex-col gap-1 justify-center items-center mb-10">
+          <img src={user.photoURL} alt="" className="w-20" />
+          <h1 className="text-3xl text-center">{user.displayName}</h1>
+          <p>{user.email}</p>
         </div>
         {isAdmin ? (
           <>
@@ -43,7 +47,7 @@ const DashBoard = () => {
               to={"/dashboard/additems"}
             >
               <ImSpoonKnife className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">Add Product</p>
+              <p className="uppercase font-semibold text-lg">dsdsda</p>
             </NavLink>
             <NavLink
               className={"flex items-center gap-3 mt-5"}
@@ -75,15 +79,15 @@ const DashBoard = () => {
             <NavLink
               className={"flex items-center gap-3"}
               activeclassname="active"
-              to={"/dashboard"}
+              to={"/dashboard/profile"}
             >
-              <IoMdHome className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">User Home</p>
+              <CgProfile className="text-3xl" />
+              <p className="uppercase font-semibold text-lg">My Profile</p>
             </NavLink>
             <NavLink
               className={"flex items-center gap-3 mt-5"}
               activeclassname="active"
-              to={"/dashboard/reservation"}
+              to={"/dashboard/add"}
             >
               <IoIosAddCircle className="text-3xl" />
               <p className="uppercase font-semibold text-lg">Add Product</p>
@@ -91,70 +95,13 @@ const DashBoard = () => {
             <NavLink
               className={"flex items-center gap-3 mt-5"}
               activeclassname="active"
-              to={"/dashboard/paymenthistory"}
+              to={"/dashboard/product"}
             >
-              <GiWallet className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">payment history</p>
-            </NavLink>
-            <NavLink
-              className={"flex items-center gap-3 mt-5"}
-              activeclassname="active"
-              to={"/dashboard/cart"}
-            >
-              <IoMdCart className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">my cart</p>
-            </NavLink>
-            <NavLink
-              className={"flex items-center gap-3 mt-5"}
-              activeclassname="active"
-              to={"/dashboard/addreview"}
-            >
-              <MdRateReview className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">add review</p>
-            </NavLink>
-            <NavLink
-              className={"flex items-center gap-3 mt-5 mb-5"}
-              activeclassname="active"
-              to={"/dashboard/mybooking"}
-            >
-              <FaCalendarCheck className="text-3xl" />
-              <p className="uppercase font-semibold text-lg">my booking</p>
+              <AiFillProduct className="text-3xl" />
+              <p className="uppercase font-semibold text-lg">My Products</p>
             </NavLink>
           </>
         )}
-        <hr />
-        <NavLink
-          className={"flex items-center gap-3 mt-5"}
-          activeclassname="active"
-          to={"/dashboard/home"}
-        >
-          <IoMdHome className="text-3xl" />
-          <p className="uppercase font-semibold text-lg">Home</p>
-        </NavLink>
-        <NavLink
-          className={"flex items-center gap-3 mt-5"}
-          activeclassname="active"
-          to={"/dashboardmenu"}
-        >
-          <TiThMenu className="text-3xl" />
-          <p className="uppercase font-semibold text-lg">Menu</p>
-        </NavLink>
-        <NavLink
-          className={"flex items-center gap-3 mt-5"}
-          activeclassname="active"
-          to={"/dashboard/shop"}
-        >
-          <FaShoppingBag className="text-3xl" />
-          <p className="uppercase font-semibold text-lg">Shop</p>
-        </NavLink>
-        <NavLink
-          className={"flex items-center gap-3 mt-5"}
-          activeclassname="active"
-          to={"/dashboard/contact"}
-        >
-          <MdEmail className="text-3xl" />
-          <p className="uppercase font-semibold text-lg">Contact</p>
-        </NavLink>
       </div>
       <div className=" flex flex-1 justify-center">
         <Outlet></Outlet>
