@@ -7,6 +7,10 @@ import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import LogRegiProtect from "./Protected/LogRegiProtect";
+import DashBoard from "./Dashboard/DashBoard";
+import UserHome from "./Dashboard/UsersPages/UserHome";
+import AddProducts from "./Dashboard/UsersPages/AddProducts";
+import ProtectedRout from "./Protected/ProtectedRout";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +31,24 @@ const router = createBrowserRouter([
       },
     ]
   },
+
+
+
+  //Dashboard
+  {
+    path: '/dashboard',
+    element: <ProtectedRout><DashBoard></DashBoard></ProtectedRout>,
+    children: [
+      {
+        path: '/dashboard/home',
+        element: <ProtectedRout><UserHome></UserHome></ProtectedRout>,
+      },
+      {
+        path: '/dashboard/add',
+        element: <ProtectedRout><AddProducts></AddProducts></ProtectedRout>
+      }
+    ]
+  }
 ]);
 
 export default router;
