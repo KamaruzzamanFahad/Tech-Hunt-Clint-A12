@@ -6,11 +6,24 @@ import { Helmet } from "react-helmet-async";
 import axios from 'axios';
 import { AuthContext } from '../../Provider/AuthProvider';
 
+import TagsInput from 'react-tagsinput'
+
+import 'react-tagsinput/react-tagsinput.css'
+import useAxiousSecure from '../../hooks/useAxiousSecure';
+
+
 const AddProducts = () => {
     const ImgBBKey = import.meta.env.VITE_imgbbApi;
     const ImgBBApi = `https://api.imgbb.com/1/upload?key=${ImgBBKey}`
 
     const { user } = useContext(AuthContext)
+    const [tags, setTags] = useState([]);
+
+    const handleChange = (tags) => {
+        setTags(tags);
+    };
+
+    const axiosSecure = useAxiousSecure() 
 
     const handlesubmit = async (event) => {
         event.preventDefault();
@@ -37,10 +50,12 @@ const AddProducts = () => {
             const OwnerName = user.displayName;
             const OwnerEmail = user.email;
             const OwnerImage = user.photoURL;
-            const item = { name, detils, image, OwnerName, OwnerEmail, OwnerImage }
+            const Tags = tags;
+            const Time = new Date();
+            const item = { name, detils, Tags, image, OwnerName, OwnerEmail, OwnerImage,Time }
             console.log(item)
 
-            axios.post('/', item,)
+            axiosSecure.post('/addproduct', item,)
                 .then(res => {
                     console.log(res.data)
                     if (res.data.insertedId) {
@@ -70,7 +85,6 @@ const AddProducts = () => {
         // console.log(response)
     }
 
-
     return (
         <div className='px-[0%] sm:px-[10%]  w-full pt-40'>
             <Helmet>
@@ -91,7 +105,10 @@ const AddProducts = () => {
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Description</h2>
                         <textarea required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Product Description'></textarea>
-
+                    </div>
+                    <div>
+                        <h2 className='mb-2 font-semibold'>Tag</h2>
+                        <TagsInput required value={tags} onChange={handleChange} />
                     </div>
                     <button className='md:col-span-2 bg-[#2dcafa] text-[#ffffff] rounded-xl font-bold'>Add Product</button>
                 </form>
