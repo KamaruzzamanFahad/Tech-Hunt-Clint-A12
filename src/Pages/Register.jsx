@@ -8,8 +8,10 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from 'sweetalert2'
+import useAxiousPublic from "../hooks/useAxiousPublic";
 
 const Register = () => {
+    const axiosPublic = useAxiousPublic()
     const { CreateUserByEmail, UpdateInfo, setuser } = useContext(AuthContext);
     const goto = useNavigate();
 
@@ -31,7 +33,17 @@ const Register = () => {
                             toast.success("LOGIN SUCCESSFUL")
                             setuser({ displayName: Name, photoURL: photoURL })
                             console.log('log done ')
-                            goto('/');
+                            const userdata = {
+                                name: Name,
+                                email: email,
+                                role: 'user',
+                            }
+                            axiosPublic.post('/users', userdata)
+                                .then(res => {
+                                    if (res.data.insertedId || res.data == 'useralready') {
+                                        goto('/');
+                                    }
+                                })
                         })
                         .catch((error) => {
                             toast.success(error.massage)
@@ -120,7 +132,7 @@ const Register = () => {
                                     <input style={inputstylthem} name='photoURL' type="url" placeholder="photoURL" className="input input-bordered" required />
                                 </div>
                                 <div className="form-control mt-1">
-                                    <button className="btn w-fu  bg-[#FF6C1A] text-white outline-none border-none">Register</button>
+                                    <button className="btn w-fu  bg-[#2BC7FA] text-white outline-none border-none">Register</button>
                                 </div>
                             </form>
                             <p className="text-sm text-center">Already have an account? <Link to={'/login'}>Login</Link> </p>

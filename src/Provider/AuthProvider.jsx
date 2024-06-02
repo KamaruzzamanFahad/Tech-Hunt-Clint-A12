@@ -2,11 +2,12 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStat
 import { createContext, useState } from 'react'
 import app from '../Pages/Config';
 import axios from 'axios';
+import useAxiousPublic from '../hooks/useAxiousPublic';
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
 const GoogleProvider = new GoogleAuthProvider();
-
+const axiosPublic = useAxiousPublic()
 const AuthProvider = ({ children }) => {
     const [user, setuser] = useState('null')
     const [looding,setlooding] = useState(true)
@@ -40,20 +41,17 @@ const AuthProvider = ({ children }) => {
             setuser(user)
             setlooding(false)
 
-            axios.post('https://server-electronic-item-repairing-services.vercel.app/jwt',useremail, {withCredentials: true,})
+            axiosPublic.post('/jwt',useremail)
             .then(res =>{
                 console.log(res.data)
+                localStorage.setItem("acces-token",res.data)
             })
         }
         else{
             console.log('user log out')
             setlooding(false)
             setuser(null)
-
-            axios.post('https://server-electronic-item-repairing-services.vercel.app/logout',useremail,{withCredentials: true,})
-            .then(res =>{
-                console.log(res.data)
-            })
+            localStorage.removeItem("acces-token")
         }
     })
 

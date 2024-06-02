@@ -77,8 +77,8 @@ const Navber = () => {
                             </div>
                         </>
                             : <div className='flex justify-end items-center flex-row'>
-                                <NavLink to={'/login'}><button className=" text-black bg-[#FF6C1A]">Log In</button></NavLink>
-                                <NavLink to={'/login'}><button className=" text-black bg-[#FF6C1A] ml-4">Register</button></NavLink>
+                                <NavLink to={'/login'}><button className=" text-black bg-[#2BC7FA]">Log In</button></NavLink>
+                                <NavLink to={'/register'}><button className=" text-black bg-[#2BC7FA] ml-4">Register</button></NavLink>
                             </div>
 
 

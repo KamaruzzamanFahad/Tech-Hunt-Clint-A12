@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import useAxiousPublic from "../hooks/useAxiousPublic";
 
 const Login = () => {
+    const axiosPublic = useAxiousPublic()
     const goto = useNavigate();
     const {
         setlooding,
@@ -33,8 +35,21 @@ const Login = () => {
     }
     const goglelogin = () => {
         LiginByGoogle()
-            .then(() => {
-                loginsucces();
+            .then(res => {
+                console.log(res.user.email)
+                const userdata = {
+                    name: res.user.displayName,
+                    email: res.user.email,
+                    role: 'user',
+                }
+                axiosPublic.post('/users', userdata)
+                    .then(res => {
+                        if (res.data.insertedId || res.data == 'useralready') {
+                            loginsucces();
+                        }
+                    })
+
+
             })
             .catch(error => toast.error(error.message))
     }
@@ -42,7 +57,7 @@ const Login = () => {
     const [type, settype] = useState('password')
 
 
-    const [theme, settheme] = useState(localStorage.getItem('theme')? localStorage.getItem('theme') : "light")
+    const [theme, settheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : "light")
     window.addEventListener('click', function (event) {
         if (event.target.classList[0] == "toggle") {
             const theme = localStorage.getItem('theme')
@@ -63,6 +78,7 @@ const Login = () => {
         color: (theme == "light") ? 'black' : 'white',
     };
 
+
     return (
 
         <div className="animate__backInDown">
@@ -76,7 +92,7 @@ const Login = () => {
 
                         <div style={cardthemesty} className="card shrink-0 max-w-sm shadow-2xl p-10 w-80 sm:w-96 ">
                             <h1 className='text-3xl mb-2 font-semibold'>Login your account</h1>
-                            <form  onSubmit={loginhandle} className="card-body mb-2 p-0">
+                            <form onSubmit={loginhandle} className="card-body mb-2 p-0">
                                 <div className="form-control">
                                     <label className="label">
                                         <span style={lable} className="label-text">Email</span>
@@ -101,7 +117,7 @@ const Login = () => {
                                     </label>
                                 </div>
                                 <div className="form-control mt-1">
-                                    <button className="btn w-fu  bg-[#FF6C1A] text-white outline-none border-none">Login</button>
+                                    <button className="btn w-fu  bg-[#2BC7FA] text-white outline-none border-none">Login</button>
                                 </div>
                             </form>
                             <p className="text-sm text-center">Dont’t Have An Account ? <Link to={'/register'}>Register</Link> </p>
