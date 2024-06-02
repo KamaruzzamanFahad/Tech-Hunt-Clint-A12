@@ -23,7 +23,7 @@ const AddProducts = () => {
         setTags(tags);
     };
 
-    const axiosSecure = useAxiousSecure() 
+    const axiosSecure = useAxiousSecure()
 
     const handlesubmit = async (event) => {
         event.preventDefault();
@@ -47,12 +47,15 @@ const AddProducts = () => {
             const name = form.name.value;
             const image = res.data.data.url;
             const detils = form.detils.value;
+            const ProductLink = form.ProductLink.value;
             const OwnerName = user.displayName;
             const OwnerEmail = user.email;
             const OwnerImage = user.photoURL;
             const Tags = tags;
             const Time = new Date();
-            const item = { name, detils, Tags, image, OwnerName, OwnerEmail, OwnerImage,Time }
+            const Status = 'pending';
+            const votes = 0;
+            const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
             console.log(item)
 
             axiosSecure.post('/addproduct', item,)
@@ -86,7 +89,7 @@ const AddProducts = () => {
     }
 
     return (
-        <div className='px-[0%] sm:px-[10%]  w-full pt-40'>
+        <div className='px-[0%] sm:px-[10%]  w-full pt-36'>
             <Helmet>
                 <title>Add Product </title>
             </Helmet>
@@ -105,6 +108,10 @@ const AddProducts = () => {
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Description</h2>
                         <textarea required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Product Description'></textarea>
+                    </div>
+                    <div className='md:col-span-2'>
+                        <h2 className='mb-2 font-semibold'>Product Link</h2>
+                        <input required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Link' name='ProductLink' />
                     </div>
                     <div>
                         <h2 className='mb-2 font-semibold'>Tag</h2>

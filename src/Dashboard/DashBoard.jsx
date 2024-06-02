@@ -95,7 +95,7 @@ const DashBoard = () => {
             <NavLink
               className={"flex items-center gap-3 mt-5"}
               activeclassname="active"
-              to={"/dashboard/product"}
+              to={"/dashboard/myproducts"}
             >
               <AiFillProduct className="text-3xl" />
               <p className="uppercase font-semibold text-lg">My Products</p>
