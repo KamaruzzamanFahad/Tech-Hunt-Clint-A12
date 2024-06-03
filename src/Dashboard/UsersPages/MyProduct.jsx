@@ -13,8 +13,20 @@ const MyProduct = () => {
                 setproduct(res.data)
             })
     }, [])
+
+
+        const [isOpen, setIsOpen] = useState(false);
+      
+        const toggleDrawer = () => {
+          setIsOpen(!isOpen);
+        };
+        
     return (
-        <div className='w-full px-40 mt-20'>
+        <div className='w-full md:px-40 md:mt-20'>
+
+            
+
+
             <div className="overflow-x-auto w-full ">
                 <table className="table w-full ">
                     {/* head */}
@@ -32,7 +44,7 @@ const MyProduct = () => {
                                 <tr>
                                     <td>
                                         <div className="flex items-center gap-3">
-                                            <div className="avatar">
+                                            <div className="avatar hidden sm:inline-block">
                                                 <div className="mask mask-squircle w-12 h-12">
                                                     <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                                 </div>

@@ -89,7 +89,7 @@ const AddProducts = () => {
     }
 
     return (
-        <div className='px-[0%] sm:px-[10%]  w-full pt-36'>
+        <div className='px-[0%] sm:px-[10%]  w-full md:pt-10'>
             <Helmet>
                 <title>Add Product </title>
             </Helmet>
