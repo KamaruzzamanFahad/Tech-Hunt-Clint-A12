@@ -24,78 +24,79 @@ const UpdateProduct = () => {
     const handleChange = (tags) => {
         setTags(tags);
     };
-
+    const [imglink, setimglink] = useState(null)
+    const [product, setprodut] = useState({})
+    const { id } = useParams()
+    useEffect(() => {
+        axiosSecure.get(`singleproduct?id=${id}`)
+            .then(res => {
+                setprodut(res.data)
+                setTags(res.data.Tags)
+                console.log(res.data)
+            })
+    }, [])
 
     const handlesubmit = async (event) => {
+
         event.preventDefault();
         const form = event.target;
 
+        if (form.image.files[0]) {
+            const Image = form.image.files[0];
+            console.log(Image)
+            console.log(ImgBBApi)
 
-        const Image = form.image.files[0];
-        console.log(Image)
-        console.log(ImgBBApi)
-
-        const formData = new FormData();
-        // console.log(formData)
-        formData.append("image", Image);
-        console.log(formData.append)
-        const res = await axios.post(ImgBBApi, formData, {
-            headers: {
-                'content-type': 'multipart/form-data'
+            const formData = new FormData();
+            // console.log(formData)
+            formData.append("image", Image);
+            console.log(formData.append)
+            const res = await axios.post(ImgBBApi, formData, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+            if (res.data.success && res.data.data.url) {
+                setimglink(res.data.data.url)
             }
-        })
-        if (res.data.success && res.data.data.url) {
+        }
+        else {
+            setimglink(product.image)
+        }
+
+        useEffect(() => {
             const name = form.name.value;
-            const image = res.data.data.url;
             const detils = form.detils.value;
             const ProductLink = form.ProductLink.value;
             const OwnerName = user.displayName;
             const OwnerEmail = user.email;
             const OwnerImage = user.photoURL;
+            const image = imglink;
             const Tags = tags;
-            const Time = new Date();
-            const Status = 'pending';
-            const votes = 0;
+            const Time = product.Time
+            const Status = product.Status;
+            const votes = product.votes;
             const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
             console.log(item)
 
-            axiosSecure.post('/addproduct', item,)
+            axiosSecure.patch(`/updateproduct?id=${product._id}`, item,)
                 .then(res => {
                     console.log(res.data)
-                    if (res.data.insertedId) {
+                    if (res.data.modifiedCount > 0) {
                         form.reset();
                         Swal.fire({
                             title: 'Success !',
-                            text: 'Service Added Successfully',
+                            text: 'Service Updated Successfully',
                             icon: 'success',
                             confirmButtonText: 'Ok'
                         })
                     }
                 })
-        }
 
+        }, [imglink])
 
-        // const response = await axios.post(
-        //     'https://api.cloudinary.com/v1_1/dczzan7us/image/upload', formData, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     },
-        //     auth: {
-        //         username: '788574336458564',
-        //         password: '23N6RtNkRYQuthVOTIaJAHCfaOw'
-        //     }
-        // }
-        // );
-        // console.log(response)
     }
-    
-    const { id } = useParams()
-    useEffect(() => {
-        axiosSecure.get(`singleproduct?id=${id}`)
-            .then(res => {
-                console.log(res.data)
-            })
-    }, [])
+
+
 
     return (
         <div className='px-[0%] sm:px-[10%]  w-full md:pt-10'>
@@ -110,25 +111,25 @@ const UpdateProduct = () => {
 
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Image</h2>
-                        <input type="file" name='image' required className="file-inpu file-input-bordered w-full" />
+                        <input type="file" name='image' className="file-inpu file-input-bordered w-full" />
                     </div>
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Name</h2>
-                        <input required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Name' name='name' />
+                        <input defaultValue={product.name} required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Name' name='name' />
                     </div>
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Description</h2>
-                        <textarea required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Product Description'></textarea>
+                        <textarea defaultValue={product.detils} required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Product Description'></textarea>
                     </div>
                     <div className='md:col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Link</h2>
-                        <input required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Link' name='ProductLink' />
+                        <input defaultValue={product.ProductLink} required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Link' name='ProductLink' />
                     </div>
                     <div>
                         <h2 className='mb-2 font-semibold'>Tag</h2>
                         <TagsInput required value={tags} onChange={handleChange} />
                     </div>
-                    <button className='md:col-span-2 bg-[#2dcafa] text-[#ffffff] rounded-xl font-bold'>Add Product</button>
+                    <button className='md:col-span-2 bg-[#2dcafa] text-[#ffffff] rounded-xl font-bold'>Update Product</button>
                 </form>
             </div>
         </div>
