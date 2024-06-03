@@ -12,6 +12,7 @@ import UserHome from "./Dashboard/UsersPages/UserHome";
 import AddProducts from "./Dashboard/UsersPages/AddProducts";
 import ProtectedRout from "./Protected/ProtectedRout";
 import MyProduct from "./Dashboard/UsersPages/MyProduct";
+import UpdateProduct from "./Dashboard/UsersPages/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/myproducts',
         element: <ProtectedRout><MyProduct></MyProduct></ProtectedRout>
+      },
+      {
+        path: '/dashboard/updatemyproduct/:id',
+        element: <ProtectedRout><UpdateProduct></UpdateProduct></ProtectedRout>
       },
     ]
   }

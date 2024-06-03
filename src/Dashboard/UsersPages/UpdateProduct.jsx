@@ -10,9 +10,11 @@ import TagsInput from 'react-tagsinput'
 
 import 'react-tagsinput/react-tagsinput.css'
 import useAxiousSecure from '../../hooks/useAxiousSecure';
+import { useParams } from 'react-router-dom';
 
 
-const AddProducts = () => {
+const UpdateProduct = () => {
+    const axiosSecure = useAxiousSecure()
     const ImgBBKey = import.meta.env.VITE_imgbbApi;
     const ImgBBApi = `https://api.imgbb.com/1/upload?key=${ImgBBKey}`
 
@@ -23,7 +25,6 @@ const AddProducts = () => {
         setTags(tags);
     };
 
-    const axiosSecure = useAxiousSecure()
 
     const handlesubmit = async (event) => {
         event.preventDefault();
@@ -87,14 +88,22 @@ const AddProducts = () => {
         // );
         // console.log(response)
     }
+    
+    const { id } = useParams()
+    useEffect(() => {
+        axiosSecure.get(`singleproduct?id=${id}`)
+            .then(res => {
+                console.log(res.data)
+            })
+    }, [])
 
     return (
         <div className='px-[0%] sm:px-[10%]  w-full md:pt-10'>
             <Helmet>
-                <title>Add Product </title>
+                <title>Update Product </title>
             </Helmet>
 
-            <h1 className='text-center mb-5 text-4xl md:text-5xl'>Add New Product</h1>
+            <h1 className='text-center mb-5 text-4xl md:text-5xl'>Update Product</h1>
             <div className=' p-12 px-5 md:px-20 rounded-3xl bg-[#2dcafa2d]'>
 
                 <form onSubmit={handlesubmit} action="" className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
@@ -126,4 +135,4 @@ const AddProducts = () => {
     );
 };
 
-export default AddProducts;
+export default UpdateProduct;
