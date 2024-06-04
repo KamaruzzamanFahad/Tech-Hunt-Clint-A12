@@ -24,7 +24,6 @@ const UpdateProduct = () => {
     const handleChange = (tags) => {
         setTags(tags);
     };
-    const [imglink, setimglink] = useState(null)
     const [product, setprodut] = useState({})
     const { id } = useParams()
     useEffect(() => {
@@ -56,28 +55,47 @@ const UpdateProduct = () => {
                 }
             })
             if (res.data.success && res.data.data.url) {
-                setimglink(res.data.data.url)
+                const name = form.name.value;
+                const detils = form.detils.value;
+                const ProductLink = form.ProductLink.value;
+                const OwnerName = user.displayName;
+                const OwnerEmail = user.email;
+                const OwnerImage = user.photoURL;
+                const Tags = tags;
+                const Time = product.Time
+                const Status = product.Status;
+                const votes = product.votes;
+                const image = res.data.data.url;
+                const item = { name, detils, ProductLink, image, Tags, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
+                axiosSecure.patch(`/updateproduct?id=${product._id}`, item,)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.modifiedCount > 0) {
+                            form.reset();
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Service Updated Successfully',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            })
+                        }
+                    })
+
             }
         }
         else {
-            setimglink(product.image)
-        }
-
-        useEffect(() => {
             const name = form.name.value;
             const detils = form.detils.value;
             const ProductLink = form.ProductLink.value;
             const OwnerName = user.displayName;
             const OwnerEmail = user.email;
             const OwnerImage = user.photoURL;
-            const image = imglink;
             const Tags = tags;
             const Time = product.Time
             const Status = product.Status;
             const votes = product.votes;
-            const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
-            console.log(item)
-
+            const image = product.image;
+            const item = { name, detils, ProductLink, image, Tags, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
             axiosSecure.patch(`/updateproduct?id=${product._id}`, item,)
                 .then(res => {
                     console.log(res.data)
@@ -91,9 +109,7 @@ const UpdateProduct = () => {
                         })
                     }
                 })
-
-        }, [imglink])
-
+        }
     }
 
 
