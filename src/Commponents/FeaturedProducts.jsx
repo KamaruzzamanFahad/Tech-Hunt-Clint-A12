@@ -3,7 +3,7 @@ import { BiSolidUpvote, BiUpvote } from 'react-icons/bi';
 import useAxiousPublic from '../hooks/useAxiousPublic';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAxiousSecure from '../hooks/useAxiousSecure';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const FeaturedProducts = () => {
     const goto = useNavigate()
@@ -42,8 +42,10 @@ const FeaturedProducts = () => {
                     product.map((item, i) => (
                         <div key={i} className='flex flex-col w-72 rounded-xl bg-[#E2FBFF]'>
                             <img src={item.image} alt="" className='rounded-t-xl  h-60' />
-                            <h1 className='text-left text-2xl w-full p-2 m-0'>{item.name}</h1>
-                            <h4 className='p-2 text-[#0F98FB]'><span className='text-black'>Tages:</span> {item.Tags.map((item) => ` #${item}`)}</h4>
+                            <Link>
+                                <h1 onClick={() => goto(`/product/${item._id}`)} className='text-left text-2xl w-full p-2 m-0'>{item.name}</h1>
+                                </Link>
+                                <h4 className='p-2 text-[#0F98FB]'><span className='text-[#034EA2]'>Tages:</span> {item.Tags.map((item) => ` #${item}`)}</h4>
 
                             <div className='flex justify-end pb-5 pr-5'>
                                 <div disabled={item.OwnerEmail == user?.email && true} onClick={() => upvotehandle(item._id)} className={`btn bg-[#C2F3FD] hover:bg-transparent`}>
