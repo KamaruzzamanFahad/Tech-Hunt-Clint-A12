@@ -5,7 +5,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 import useAxiousSecure from '../hooks/useAxiousSecure';
 import { useNavigate } from 'react-router-dom';
 
-const FeaturedProducts = () => {
+const TrandingProducts = () => {
     const goto = useNavigate()
     const { user } = useContext(AuthContext)
     const axiosPublic = useAxiousPublic()
@@ -14,7 +14,7 @@ const FeaturedProducts = () => {
     const [reload, setreload] = useState(0)
 
     useEffect(() => {
-        axiosPublic.get('/latestproduct')
+        axiosPublic.get('/tranding-tproduct')
             .then(res => {
                 setproduct(res.data)
             })
@@ -35,7 +35,7 @@ const FeaturedProducts = () => {
     }
     return (
         <div className='mt-20 mb-16'>
-            <h1 className='text-center text-4xl'>Featured Products</h1>
+            <h1 className='text-center text-4xl'>Trending Products</h1>
 
             <div className='flex justify-around flex-wrap  gap-5 mt-10'>
                 {
@@ -55,8 +55,11 @@ const FeaturedProducts = () => {
                     ))
                 }
             </div>
+            <div className='flex justify-center mt-10 mb-10'>
+                <button className='bg-[#109AFB] text-white'>Show All Products</button>
+            </div>
         </div >
     );
 };
 
-export default FeaturedProducts;
+export default TrandingProducts;
