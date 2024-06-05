@@ -54,7 +54,7 @@ const AddProducts = () => {
             const Tags = tags;
             const Time = new Date();
             const Status = 'pending';
-            const votes = 0;
+            const votes = [];
             const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
             console.log(item)
 

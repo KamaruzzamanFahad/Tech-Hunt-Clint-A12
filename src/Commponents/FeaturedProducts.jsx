@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
                             <div className='flex justify-end pb-5 pr-5'>
                                 <div disabled={item.OwnerEmail == user?.email && true} onClick={() => upvotehandle(item._id)} className={`btn bg-[#C2F3FD] hover:bg-transparent`}>
                                     {item?.votes?.includes(user?.email) ? <BiSolidUpvote className='text-2xl' /> : <BiUpvote className='text-2xl' />}
-                                    <span>{item.votes.length}</span>
+                                    <span>{item.votes?.length}</span>
                                 </div>
                             </div>
                         </div>

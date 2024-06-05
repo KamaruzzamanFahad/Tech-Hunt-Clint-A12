@@ -13,6 +13,8 @@ import AddProducts from "./Dashboard/UsersPages/AddProducts";
 import ProtectedRout from "./Protected/ProtectedRout";
 import MyProduct from "./Dashboard/UsersPages/MyProduct";
 import UpdateProduct from "./Dashboard/UsersPages/UpdateProduct";
+import AllProducts from "./Pages/AllProducts";
+import ProductDetils from "./Pages/ProductDetils";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <LogRegiProtect><Register></Register></LogRegiProtect>
+      },
+      {
+        path: '/products',
+        element: <AllProducts></AllProducts>,
+      },
+      {
+        path: '/product/:id',
+        element: <ProtectedRout><ProductDetils></ProductDetils></ProtectedRout>,
       },
     ]
   },
