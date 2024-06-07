@@ -15,6 +15,7 @@ import MyProduct from "./Dashboard/UsersPages/MyProduct";
 import UpdateProduct from "./Dashboard/UsersPages/UpdateProduct";
 import AllProducts from "./Pages/AllProducts";
 import ProductDetils from "./Pages/ProductDetils";
+import UserProfile from "./Dashboard/UsersPages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/updatemyproduct/:id',
         element: <ProtectedRout><UpdateProduct></UpdateProduct></ProtectedRout>
+      },
+      {
+        path: '/dashboard/myprofile',
+        element: <ProtectedRout><UserProfile></UserProfile></ProtectedRout>
       },
     ]
   }

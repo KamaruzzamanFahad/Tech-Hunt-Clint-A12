@@ -37,8 +37,8 @@ const DashBoard = () => {
     <div className="relative flex flex-col md:flex-row ">
       {/* Button for small screens */}
       <div>
-      <AiOutlineMenuUnfold onClick={toggleDrawer} className="pl-3 text-5xl pt-2  md:hidden" />
-       
+        <AiOutlineMenuUnfold onClick={toggleDrawer} className="pl-3 text-5xl pt-2  md:hidden" />
+
       </div>
 
       {/* Drawer */}
@@ -100,7 +100,7 @@ const DashBoard = () => {
               <NavLink
                 className={"flex items-center gap-3"}
                 activeclassname="active"
-                to={"/dashboard/profile"}
+                to={"/dashboard/myprofile"}
               >
                 <CgProfile className="text-3xl" />
                 <p className="uppercase font-semibold text-lg">My Profile</p>
