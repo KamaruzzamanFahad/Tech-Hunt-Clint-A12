@@ -1,21 +1,14 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { IoIosAddCircle, IoMdHome } from "react-icons/io";
 import { FaBook, FaCalendarAlt, FaList, FaUser, FaUsers } from "react-icons/fa";
-import { GiWallet } from "react-icons/gi";
-import { IoMdCart } from "react-icons/io";
 import { MdOutlinePendingActions, MdRateReview, MdReport } from "react-icons/md";
-import { FaCalendarCheck } from "react-icons/fa";
-import { TiThMenu } from "react-icons/ti";
-import { FaShoppingBag } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { CiForkAndKnife } from "react-icons/ci";
 import { ImSpoonKnife } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
 import { AiFillProduct, AiOutlineMenuUnfold } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import useAxiousSecure from "../hooks/useAxiousSecure";
-// import useAdmin from "../hooks/useAdmin";
+import { Helmet } from "react-helmet-async";
 
 const DashBoard = () => {
   const { user } = useContext(AuthContext)
@@ -25,30 +18,22 @@ const DashBoard = () => {
     axiosSecure.get(`/user?email=${user.email}`)
       .then(res => setuserdata(res.data))
   }, [])
-  const isAdmin = false;;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(userdata.role)
 
   return (
-
-
-
-
-
-
     <div className="relative flex flex-col md:flex-row ">
-      {/* Button for small screens */}
+      <Helmet>
+        <title>Dasshboard</title>
+      </Helmet>
       <div>
         <AiOutlineMenuUnfold onClick={toggleDrawer} className="pl-3 text-5xl pt-2  md:hidden" />
 
       </div>
-
-      {/* Drawer */}
       <div onClick={toggleDrawer}
         className={`fixed inset-y-0 left-0 bg-gray-100  z-[10] transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 w-full md:w-72 md:h-full bg-transparent`}
@@ -143,7 +128,7 @@ const DashBoard = () => {
           <Outlet></Outlet>
         </div>
       </div>
-    </div>
+    </div >
 
   );
 };

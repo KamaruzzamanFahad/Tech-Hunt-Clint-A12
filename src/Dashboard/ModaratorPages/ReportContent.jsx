@@ -3,6 +3,7 @@ import useAxiousSecure from '../../hooks/useAxiousSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ReportContent = () => {
 
@@ -14,7 +15,6 @@ const ReportContent = () => {
     useEffect(() => {
         axiosSecure.get(`/report`)
             .then(res => {
-                console.log(res.data)
                 setproduct(res.data)
             })
     }, [reload])
@@ -61,10 +61,9 @@ const ReportContent = () => {
 
     return (
         <div className='w-full md:px-40 md:mt-20'>
-
-
-
-
+            <Helmet>
+                <title>Reported Content</title>
+            </Helmet>
             <div className="overflow-x-auto w-full ">
                 <table className="table w-full ">
                     {/* head */}

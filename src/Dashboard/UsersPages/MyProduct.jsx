@@ -3,6 +3,7 @@ import useAxiousSecure from '../../hooks/useAxiousSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const MyProduct = () => {
 
@@ -14,21 +15,12 @@ const MyProduct = () => {
     useEffect(() => {
         axiosSecure.get(`/myproduct?email=${user.email}`)
             .then(res => {
-                console.log(res.data)
                 setproduct(res.data)
             })
     }, [reload])
 
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDrawer = () => {
-        setIsOpen(!isOpen);
-    };
-
-
     const handleupdate = (item) => {
-    goto(`/dashboard/updatemyproduct/${item._id}`)
+        goto(`/dashboard/updatemyproduct/${item._id}`)
     }
 
     const handledelet = (item) => {
@@ -60,9 +52,9 @@ const MyProduct = () => {
     return (
         <div className='w-full md:px-40 md:mt-20'>
 
-
-
-
+            <Helmet>
+                <title>My Product</title>
+            </Helmet>
             <div className="overflow-x-auto w-full ">
                 <table className="table w-full ">
                     {/* head */}

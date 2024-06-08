@@ -1,12 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink, } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
+import useAxiousSecure from '../hooks/useAxiousSecure';
 
 
 
 
 const Navber = () => {
     const { user, LogOut } = useContext(AuthContext)
+    const axiosSecure = useAxiousSecure()
+    const [dashbordlink, setdashbordlink] = useState('/dashboard')
+
+    useEffect(() => {
+        user?.email &&
+            axiosSecure.get(`/user?email=${user.email}`)
+                .then(res => {
+                    if (res.data.role == "user") {
+                        setdashbordlink('/dashboard/myprofile')
+                    } else if (res.data.role == 'moderator') {
+                        setdashbordlink('/dashboard/reviewproducts')
+                    } else if (res.data.role == 'admin') {
+                        setdashbordlink('/dashboard/statistics')
+                    } else {
+                        setdashbordlink('/dashboard')
+                    }
+                })
+    }, [user])
+
+
 
     return (
         <div className='py-5'>
@@ -24,16 +45,7 @@ const Navber = () => {
                                     isPending ? "pending" : isActive ? "active" : ""
                                 }
                                 to={'/'}>Home</NavLink></li>
-                            <li><NavLink to={'/allservices'}>Products</NavLink></li>
-                            <li className={user ? `inline-block` : `hidden`}>
-                                <NavLink to={'/'}>Dashboard</NavLink>
-                                <ul className="p-2 w-48 z-[20]">
-                                    <li><NavLink to={'/addservice'}>Add Service</NavLink></li>
-                                    <li><NavLink to={'/manageservice'}>Manage Service</NavLink></li>
-                                    <li><NavLink to={'/bookedservices'}>Booked-Services</NavLink></li>
-                                    <li><NavLink to={'/servicetodo'}>Service-To-Do</NavLink></li>
-                                </ul>
-                            </li>
+                            <li><NavLink to={'/products'}>Products</NavLink></li>
                         </ul>
                     </div>
                     <Link to={'/'}>
@@ -46,18 +58,7 @@ const Navber = () => {
 
                     <ul className="menu menu-horizontal px-1">
                         <li><NavLink to={'/'}>Home</NavLink></li>
-                        <li><NavLink to={'/allservices'}>Products</NavLink></li>
-                        <li className={user ? `inline-block` : `hidden`}>
-                            <details>
-                                <summary>Dashboard</summary>
-                                <ul className="p-2 w-56 z-[10]">
-                                    <li><NavLink to={'/addservice'}>Add Service</NavLink></li>
-                                    <li><NavLink to={'/manageservice'}>Manage Service</NavLink></li>
-                                    <li><NavLink to={'/bookedservices'}>Booked-Services</NavLink></li>
-                                    <li><NavLink to={'/servicetodo'}>Service-To-Do</NavLink></li>
-                                </ul>
-                            </details>
-                        </li>
+                        <li><NavLink to={'/products'}>Products</NavLink></li>
                     </ul>
                 </div>
                 <div className="navbar-end">
@@ -71,7 +72,7 @@ const Navber = () => {
                                 </div>
                                 <ul tabIndex={0} className="mt-0 z-[1] p-2 shadow menu menu-sm dropdown-content bg-[#ececec] rounded-box w-52">
                                     <li className='p-2 px-3'>{user.displayName}</li>
-                                    <li><Link to={'dashboard'}>Dashboard</Link ></li>
+                                    <li><Link to={dashbordlink}>Dashboard</Link ></li>
                                     <li><a onClick={LogOut}>Logout</a ></li>
                                 </ul>
                             </div>

@@ -30,7 +30,6 @@ const TrandingProducts = () => {
         }
         else {
             goto('/login')
-            console.log('goto')
         }
     }
     return (

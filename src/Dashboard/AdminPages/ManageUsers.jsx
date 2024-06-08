@@ -6,6 +6,7 @@ import useAxiousSecure from '../../hooks/useAxiousSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ManageUsers = () => {
 
@@ -17,17 +18,12 @@ const ManageUsers = () => {
     useEffect(() => {
         axiosSecure.get(`/users`)
             .then(res => {
-                console.log(res.data)
                 setproduct(res.data)
             })
     }, [reload])
 
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDrawer = () => {
-        setIsOpen(!isOpen);
-    };
+   
 
 
     const handleupdatestatus = (id, role) => {
@@ -45,37 +41,13 @@ const ManageUsers = () => {
             })
     }
 
-    const handledelet = (item) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/deletmyproduct?id=${item._id}`)
-                    .then(res => {
-                        setreload(Math.random())
-                        if (res.data.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
-            }
-        });
-    }
+
 
     return (
         <div className='w-full md:px-40 md:mt-20'>
-
-
-
+            <Helmet>
+                <title>Manage Users</title>
+            </Helmet>
 
             <div className="overflow-x-auto w-full ">
                 <table className="table w-full ">

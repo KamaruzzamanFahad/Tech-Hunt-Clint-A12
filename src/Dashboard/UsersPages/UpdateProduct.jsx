@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
-
 import { Helmet } from "react-helmet-async";
-// import usePostData from '../CustomHooks/usePostData';
 import axios from 'axios';
 import { AuthContext } from '../../Provider/AuthProvider';
 
@@ -31,7 +29,6 @@ const UpdateProduct = () => {
             .then(res => {
                 setprodut(res.data)
                 setTags(res.data.Tags)
-                console.log(res.data)
             })
     }, [])
 
@@ -42,13 +39,9 @@ const UpdateProduct = () => {
 
         if (form.image.files[0]) {
             const Image = form.image.files[0];
-            console.log(Image)
-            console.log(ImgBBApi)
 
             const formData = new FormData();
-            // console.log(formData)
             formData.append("image", Image);
-            console.log(formData.append)
             const res = await axios.post(ImgBBApi, formData, {
                 headers: {
                     'content-type': 'multipart/form-data'
@@ -69,7 +62,6 @@ const UpdateProduct = () => {
                 const item = { name, detils, ProductLink, image, Tags, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
                 axiosSecure.patch(`/updateproduct?id=${product._id}`, item,)
                     .then(res => {
-                        console.log(res.data)
                         if (res.data.modifiedCount > 0) {
                             form.reset();
                             Swal.fire({
@@ -98,7 +90,6 @@ const UpdateProduct = () => {
             const item = { name, detils, ProductLink, image, Tags, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
             axiosSecure.patch(`/updateproduct?id=${product._id}`, item,)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.modifiedCount > 0) {
                         form.reset();
                         Swal.fire({

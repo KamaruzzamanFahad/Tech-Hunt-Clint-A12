@@ -5,6 +5,7 @@ import useAxiousPublic from '../hooks/useAxiousPublic';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAxiousSecure from '../hooks/useAxiousSecure';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const AllProducts = () => {
     const goto = useNavigate()
@@ -30,7 +31,6 @@ const AllProducts = () => {
     for (let i = 0; i < totalpage; i++) {
         pages.push(i)
     }
-    console.log(currentpage, totalpage, productperpage)
     useEffect(() => {
         const skip = (currentpage - 1) * productperpage
         axiosPublic.get(`/productsbysize?skip=${skip}&limit=${productperpage}&text=${text}`)
@@ -49,7 +49,6 @@ const AllProducts = () => {
         }
         else {
             goto('/login')
-            console.log('goto')
         }
     }
 
@@ -61,16 +60,6 @@ const AllProducts = () => {
 
     }
 
-    // useEffect(() => {
-    //     if(text)
-    //     axiosPublic.get(`/products-serch?text=${text}`)
-    //         .then(res => {
-    //             setproduct(res.data)
-    //         })
-    // }, [text])
-
-
-    //pagination
 
 
     const handlepagination = async (i) => {
@@ -78,6 +67,9 @@ const AllProducts = () => {
     }
     return (
         <div className='mt-5 mb-10'>
+            <Helmet>
+                <title>All Products</title>
+            </Helmet>
             <h1 className='text-center text-4xl mb-10'>All Products</h1>
             <div data-aos="fade-up"
                 data-aos-duration="800" className='flex flex-col justify-center items-center'>

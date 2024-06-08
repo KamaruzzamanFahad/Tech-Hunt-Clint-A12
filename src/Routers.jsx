@@ -8,7 +8,6 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import LogRegiProtect from "./Protected/LogRegiProtect";
 import DashBoard from "./Dashboard/DashBoard";
-import UserHome from "./Dashboard/UsersPages/UserHome";
 import AddProducts from "./Dashboard/UsersPages/AddProducts";
 import ProtectedRout from "./Protected/ProtectedRout";
 import MyProduct from "./Dashboard/UsersPages/MyProduct";
@@ -23,11 +22,13 @@ import ManageUsers from "./Dashboard/AdminPages/ManageUsers";
 import ManageCoupons from "./Dashboard/AdminPages/ManageCoupons";
 import AdminProtected from "./Protected/AdminProtected";
 import ModeratorProtected from "./Protected/ModeratorProtected";
+import ErrorPage from "./Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/',
@@ -59,10 +60,6 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <ProtectedRout><DashBoard></DashBoard></ProtectedRout>,
     children: [
-      {
-        path: '/dashboard/home',
-        element: <ProtectedRout><UserHome></UserHome></ProtectedRout>,
-      },
       {
         path: '/dashboard/add',
         element: <ProtectedRout><AddProducts></AddProducts></ProtectedRout>

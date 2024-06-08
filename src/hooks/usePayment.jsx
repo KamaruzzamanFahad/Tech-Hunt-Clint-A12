@@ -7,7 +7,6 @@ import useAxiousSecure from './useAxiousSecure';
 const usePayment = () => {
     const { user } = useContext(AuthContext)
     const axiosSecure = useAxiousSecure()
-    console.log(user)
     const { refetch, data: payment = [] } = useQuery({
         queryKey: ['payment'],
         queryFn: async () => {

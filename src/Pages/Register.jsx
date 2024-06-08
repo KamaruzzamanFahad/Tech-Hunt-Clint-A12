@@ -26,13 +26,11 @@ const Register = () => {
             CreateUserByEmail(email, password)
                 .then(() => {
                     toast.success("Registration done, prifile updating please wait");
-                    console.log('regi done ')
 
                     UpdateInfo(Name, photoURL)
                         .then(() => {
                             toast.success("LOGIN SUCCESSFUL")
                             setuser({ displayName: Name, photoURL: photoURL })
-                            console.log('log done ')
                             const userdata = {
                                 name: Name,
                                 email: email,
@@ -51,7 +49,6 @@ const Register = () => {
                 })
                 .catch(error => {
                     toast.error(error.message)
-                    console.log(error)
                 })
         } else {
             Swal.fire({
@@ -64,29 +61,7 @@ const Register = () => {
         }
 
     }
-
     const [type, settype] = useState('password')
-
-    const [theme, settheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : "light")
-    window.addEventListener('click', function (event) {
-        if (event.target.classList[0] == "toggle") {
-            const theme = localStorage.getItem('theme')
-            settheme(theme)
-        }
-    });
-    const cardthemesty = {
-        color: (theme == "light") ? 'black' : 'rgb(240, 240, 240)',
-        'background-color': (theme == "light") ? 'white' : '#ffffff22',
-    };
-
-    const inputstylthem = {
-        color: (theme == "light") ? 'black' : 'rgb(240, 240, 240)',
-        'background-color': (theme == "light") ? 'white' : '#ffffff22',
-    };
-
-    const lable = {
-        color: (theme == "light") ? 'black' : 'white',
-    };
 
     return (
         <div>
@@ -98,26 +73,26 @@ const Register = () => {
                 <div className="hero pb-10">
                     <div className="hero-content flex-col lg:flex-row-reverse">
 
-                        <div style={cardthemesty} className="card shrink-0 max-w-sm shadow-2xl  p-10  w-80 sm:w-96">
+                        <div className="card shrink-0 max-w-sm shadow-2xl  p-10  w-80 sm:w-96">
                             <h1 className='text-3xl mb-2 font-semibold'>Register New account</h1>
                             <form onSubmit={reginhandle} className="card-body mb-2 p-0">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span style={lable} className="label-text">Name</span>
+                                        <span  className="label-text">Name</span>
                                     </label>
-                                    <input style={inputstylthem} name='Name' type="text" placeholder="Name" className="input input-bordered" required />
+                                    <input  name='Name' type="text" placeholder="Name" className="input input-bordered" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span style={lable} className="label-text">Email</span>
+                                        <span  className="label-text">Email</span>
                                     </label>
-                                    <input style={inputstylthem} name='email' type="email" placeholder="email" className="input input-bordered" required />
+                                    <input  name='email' type="email" placeholder="email" className="input input-bordered" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span style={lable} className="label-text">Password</span>
+                                        <span  className="label-text">Password</span>
                                     </label>
-                                    <div style={inputstylthem} className='flex items-center input input-bordered'>
+                                    <div  className='flex items-center input input-bordered'>
                                         <input name='password' type={type} placeholder="password" className="w-full input border-none" required />
                                         {
                                             type == "password" ? <FaEyeSlash onClick={() => settype("text")} /> : <FaEye onClick={() => settype("password")} />
@@ -127,9 +102,9 @@ const Register = () => {
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span style={lable} className="label-text">photoURL</span>
+                                        <span  className="label-text">photoURL</span>
                                     </label>
-                                    <input style={inputstylthem} name='photoURL' type="url" placeholder="photoURL" className="input input-bordered" required />
+                                    <input  name='photoURL' type="url" placeholder="photoURL" className="input input-bordered" required />
                                 </div>
                                 <div className="form-control mt-1">
                                     <button className="btn w-fu  bg-[#2BC7FA] text-white outline-none border-none">Register</button>

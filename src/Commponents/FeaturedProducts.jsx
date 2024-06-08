@@ -30,7 +30,6 @@ const FeaturedProducts = () => {
         }
         else {
             goto('/login')
-            console.log('goto')
         }
     }
     return (

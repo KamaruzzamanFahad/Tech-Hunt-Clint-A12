@@ -16,13 +16,11 @@ const CheckoutFrom = () => {
     const price = 10;
     const [payment, refetch] = usePayment()
     const goto = useNavigate()
-    console.log(price)
     useEffect(() => {
         if (price != 0) {
             axiosSecure.post('/create-payment-intent', { price })
                 .then(res => {
                     setclientSecret(res.data.clientSecret)
-                    console.log('clint seccccccccccccc', res.data.clientSecret)
                 })
         }
     }, [price])
@@ -43,10 +41,8 @@ const CheckoutFrom = () => {
             card,
         })
         if (error) {
-            console.log('error : ', error)
             seterror(error.message)
         } else {
-            console.log('payment methode: ', paymentMethod)
             seterror('')
         }
 
@@ -63,10 +59,8 @@ const CheckoutFrom = () => {
             }
         })
         if (erra) {
-            console.log('error is: ', erra)
         }
         else {
-            console.log('payment intent: ', paymentIntent)
             if (paymentIntent.status == 'succeeded') {
                 settranjectionid(paymentIntent.id)
 

@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
-
 import { Helmet } from "react-helmet-async";
-// import usePostData from '../CustomHooks/usePostData';
 import axios from 'axios';
 import { AuthContext } from '../../Provider/AuthProvider';
 
@@ -31,13 +29,9 @@ const AddProducts = () => {
 
 
         const Image = form.image.files[0];
-        console.log(Image)
-        console.log(ImgBBApi)
 
         const formData = new FormData();
-        // console.log(formData)
         formData.append("image", Image);
-        console.log(formData.append)
         const res = await axios.post(ImgBBApi, formData, {
             headers: {
                 'content-type': 'multipart/form-data'
@@ -56,11 +50,9 @@ const AddProducts = () => {
             const Status = 'pending';
             const votes = [];
             const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
-            console.log(item)
 
             axiosSecure.post('/addproduct', item,)
                 .then(res => {
-                    console.log(res.data)
                     if (res.data.insertedId) {
                         form.reset();
                         Swal.fire({

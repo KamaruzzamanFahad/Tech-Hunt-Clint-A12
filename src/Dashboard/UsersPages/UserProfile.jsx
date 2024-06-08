@@ -5,6 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutFrom from './CheckoutFrom';
 import { loadStripe } from "@stripe/stripe-js";
 import usePayment from '../../hooks/usePayment';
+import { Helmet } from 'react-helmet-async';
 
 const stripePromise = loadStripe(import.meta.env.VITE_PK)
 const UserProfile = () => {
@@ -14,7 +15,6 @@ const UserProfile = () => {
     const [modalcode, setmodalcode] = useState(0)
 
     if (payment.email == user.email) {
-        console.log("laiga geche reeeeeeeeeeeeeeee")
         closeModal()
     }
     function closeModal() {
@@ -30,6 +30,9 @@ const UserProfile = () => {
     }
     return (
         <div className='w-full md:ml-16 lg:p-40'>
+            <Helmet>
+                <title>My Profile</title>
+            </Helmet>
             <div className='flex flex-col bg-[#E2FBFF] justify-center items-center p-20 py-40 w-full'>
                 <img src={user.photoURL} alt="" />
                 <h1 className='text-center text-3xl sm:text-5xl'>{user.displayName}</h1>
@@ -50,7 +53,6 @@ const UserProfile = () => {
 
                         <div className="modal-action">
                             <form method="dialog">
-                                {/* if there is a button, it will close the modal */}
                                 <button className="btn">Close</button>
                             </form>
                         </div>

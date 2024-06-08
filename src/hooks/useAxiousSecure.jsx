@@ -27,9 +27,8 @@ const useAxiousSecure = () => {
       if (status == 401 || status == 403) {
         await Logout();
         <Navigate to={'/login'}></Navigate>
-        console.log('hiding logout')
       }
-      console.log("status code is ", status);
+      
       return Promise.reject(error);
     }
   );

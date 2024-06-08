@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { createContext, useState } from 'react'
 import app from '../Pages/Config';
-import axios from 'axios';
 import useAxiousPublic from '../hooks/useAxiousPublic';
 
 export const AuthContext = createContext(null)
@@ -42,18 +41,15 @@ const AuthProvider = ({ children }) => {
         const email = user?.email || user?.email;
         const useremail = { email };
         if (user) {
-            console.log(user)
             setuser(user)
             setlooding(false)
 
             axiosPublic.post('/jwt', useremail)
                 .then(res => {
-                    console.log(res.data)
                     localStorage.setItem("acces-token", res.data)
                 })
         }
         else {
-            console.log('user log out')
             setlooding(false)
             setuser(null)
             localStorage.removeItem("acces-token")

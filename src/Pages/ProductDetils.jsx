@@ -12,11 +12,13 @@ import { EffectCoverflow, Pagination } from 'swiper/modules';
 import ReactStarsRating from 'react-awesome-stars-rating';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet-async';
 
 const ProductDetils = () => {
     const { id } = useParams()
     const axiosSecure = useAxiousSecure()
     const [data, setdata] = useState(null)
+    const [reviews, setreviews] = useState([])
     const { user } = useContext(AuthContext)
     const [reload, setreload] = useState(0)
     const [rating, setRating] = useState(0)
@@ -24,10 +26,16 @@ const ProductDetils = () => {
     useEffect(() => {
         axiosSecure.get(`/singleproduct?id=${id}`)
             .then(res => {
-                console.log(res.data)
                 setdata(res.data)
+
+                axiosSecure.get(`/reviews?id=${res.data._id}`)
+                    .then(res => {
+                        setreviews(res.data)
+                    })
             })
     }, [reload])
+
+
 
     const upvotehandle = (id) => {
         const email = user?.email;
@@ -39,7 +47,6 @@ const ProductDetils = () => {
         }
         else {
             goto('/login')
-            console.log('goto')
         }
     }
 
@@ -52,12 +59,10 @@ const ProductDetils = () => {
                     setreload(Math.random())
                     setreload(Math.random())
                     toast.success('reported')
-                    console.log(res.data)
                 })
         }
         else {
             goto('/login')
-            console.log('goto')
         }
     }
 
@@ -70,12 +75,11 @@ const ProductDetils = () => {
         const image = user.photoURL;
         const review = fromma.review.value;
         const ratting = rating;
-        const item = { name, image, review, ratting }
-        console.log(item)
-        axiosSecure.patch(`/add-product-review?id=${data._id}`, item)
+        const productid = data._id;
+        const item = { productid, name, image, review, ratting }
+        axiosSecure.post(`/add-product-review?id=${data._id}`, item)
             .then(res => {
-                console.log(res.data)
-                if (res.data.modifiedCount > 0) {
+                if (res.data.insertedId) {
                     setreload(Math.random())
                     Swal.fire({
                         title: "Good job!",
@@ -88,14 +92,16 @@ const ProductDetils = () => {
     }
     window.addEventListener('resize', () => {
         setscreensize(window.innerWidth)
-        console.log('hello', window.innerWidth);
     });
 
 
     if (data) {
-        const { _id, name, image, detils, Tags, ProductLink, votes, OwnerEmail, Reviews, Report } = data;
+        const { _id, name, image, detils, Tags, ProductLink, votes, OwnerEmail, Report } = data;
         return (
             <div>
+                <Helmet>
+                    <title>Products Detils</title>
+                </Helmet>
                 <div className='flex flex-col xl:flex-row md:px-20 py-10 gap-10'>
                     <div className='w-full xl:w-[50%]'>
                         <img src={image} alt="" className='w-full' />
@@ -127,12 +133,12 @@ const ProductDetils = () => {
                         </div>
 
                         <div className='mt-5  '>
-                            <h1 className='text-3xl py-2'>Reviews: {Reviews ? Reviews.length : ''}</h1>
+                            <h1 className='text-3xl py-2'>Reviews: {reviews ? reviews.length : ''}</h1>
                             <Swiper
                                 effect={'coverflow'}
                                 grabCursor={true}
                                 centeredSlides={true}
-                                slidesPerView={screensize <690 ? 2 : 3}
+                                slidesPerView={screensize < 690 ? 2 : 3}
                                 coverflowEffect={{
                                     rotate: 10,
                                     stretch: -50,
@@ -146,9 +152,9 @@ const ProductDetils = () => {
 
                             >
                                 {
-                                    Reviews ?
-                                        Reviews.map((item, i) => (
-                                            <SwiperSlide key={i} className='bg-green-500'>
+                                    reviews ?
+                                        reviews.map((item, i) => (
+                                            <SwiperSlide key={i} className=''>
                                                 <div className='rounded-lg p-5 border-[1px] border-[#00000024] '>
                                                     <div className="rating mb-3 w-96">
                                                         <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400"
