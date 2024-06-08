@@ -29,8 +29,19 @@ const ProductReview = () => {
     };
 
 
-    const handleupdatestatus = (id,status) => {
-       axiosSecure.patch('/')
+    const handleupdatestatus = (id, status) => {
+        axiosSecure.patch('/product-status-update', { status, id })
+            .then(res => {
+                setreload(Math.random())
+                if (res.data.modifiedCount > 0) {
+                    setreload(Math.random())
+                    Swal.fire({
+                        title: "Status Updated",
+                        text: "Status Successfully Updated",
+                        icon: "success"
+                    });
+                }
+            })
     }
 
     const handledelet = (item) => {
@@ -90,7 +101,7 @@ const ProductReview = () => {
                                             </div>
                                             <div>
                                                 <div className="font-bold">{item.name}</div>
-                                                <div className="text-sm opacity-50">votes: {item.votes.length}</div>
+                                                <div className="text-sm opacity-50">Status: {item.Status}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -98,13 +109,13 @@ const ProductReview = () => {
                                         <button onClick={() => goto(`/product/${item._id}`)} className="btn btn-ghost btn-xs bg-[#bbffe696]">View Details</button>
                                     </th>
                                     <th>
-                                        <button onClick={() => handleupdate(item)} className="btn btn-ghost btn-xs bg-[#debbff96]">Make Featured</button>
+                                        <button disabled={item.Status == 'featured' ? true : false} onClick={() => handleupdatestatus(item._id, 'featured')} className="btn btn-ghost btn-xs bg-[#debbff96]">Make Featured</button>
                                     </th>
                                     <th>
-                                        <button onClick={() => handledelet(item)} className="btn btn-ghost btn-xs bg-[#bbe4ff96]">Accept</button>
+                                        <button disabled={item.Status == 'accepted' ? true : false} onClick={() => handleupdatestatus(item._id, 'accepted')} className="btn btn-ghost btn-xs bg-[#bbe4ff96]">Accept</button>
                                     </th>
                                     <th>
-                                        <button onClick={() => handledelet(item)} className="btn btn-ghost btn-xs bg-[#ffbbbb96]">Reject</button>
+                                        <button disabled={item.Status == 'rejected' ? true : false} onClick={() => handleupdatestatus(item._id, 'rejected')} className="btn btn-ghost btn-xs bg-[#ffbbbb96]">Reject</button>
                                     </th>
                                 </tr>
                             ))

@@ -87,7 +87,7 @@ const MyProduct = () => {
                                             </div>
                                             <div>
                                                 <div className="font-bold">{item.name}</div>
-                                                <div className="text-sm opacity-50">votes: {item.votes}</div>
+                                                <div className="text-sm opacity-50">votes: {item.votes.length}</div>
                                             </div>
                                         </div>
                                     </td>
