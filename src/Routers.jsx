@@ -16,6 +16,8 @@ import UpdateProduct from "./Dashboard/UsersPages/UpdateProduct";
 import AllProducts from "./Pages/AllProducts";
 import ProductDetils from "./Pages/ProductDetils";
 import UserProfile from "./Dashboard/UsersPages/UserProfile";
+import ProductReview from "./Dashboard/ModaratorPages/ProductReview";
+import ReportContent from "./Dashboard/ModaratorPages/ReportContent";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,15 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/myprofile',
         element: <ProtectedRout><UserProfile></UserProfile></ProtectedRout>
+      },
+      //moderator routs
+      {
+        path: '/dashboard/reviewproducts',
+        element: <ProtectedRout><ProductReview></ProductReview></ProtectedRout>
+      },
+      {
+        path: '/dashboard/reportcontent',
+        element: <ProtectedRout><ReportContent></ReportContent></ProtectedRout>
       },
     ]
   }

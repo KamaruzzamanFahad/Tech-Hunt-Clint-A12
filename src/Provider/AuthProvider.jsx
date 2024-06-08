@@ -10,44 +10,49 @@ const GoogleProvider = new GoogleAuthProvider();
 const axiosPublic = useAxiousPublic()
 const AuthProvider = ({ children }) => {
     const [user, setuser] = useState('null')
-    const [looding,setlooding] = useState(true)
+    const [looding, setlooding] = useState(true)
 
-    const CreateUserByEmail = (email,password) => {
-        return createUserWithEmailAndPassword(auth,email,password)
+    const CreateUserByEmail = (email, password) => {
+        return createUserWithEmailAndPassword(auth, email, password)
     }
-    const LoginByEmail = (email,password) => {
-       return signInWithEmailAndPassword(auth,email,password)
+    const LoginByEmail = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password)
     }
-    const LiginByGoogle = () =>{
-       return signInWithPopup(auth,GoogleProvider)
+    const LiginByGoogle = () => {
+        return signInWithPopup(auth, GoogleProvider)
     }
-    const UpdateInfo = (name,photo) =>{
-       return updateProfile(auth.currentUser,{
-            displayName:name,
-            photoURL:photo,
+    const UpdateInfo = (name, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo,
+        })
+    }
+    const UpdatePayment = () => {
+        return updateProfile(auth.currentUser, {
+            PaymentVirifide: true,
         })
     }
 
-    const LogOut = () =>{
-        
+    const LogOut = () => {
+
         signOut(auth)
     }
 
-    onAuthStateChanged(auth, (user) =>{
+    onAuthStateChanged(auth, (user) => {
         const email = user?.email || user?.email;
         const useremail = { email };
-        if(user){
+        if (user) {
             console.log(user)
             setuser(user)
             setlooding(false)
 
-            axiosPublic.post('/jwt',useremail)
-            .then(res =>{
-                console.log(res.data)
-                localStorage.setItem("acces-token",res.data)
-            })
+            axiosPublic.post('/jwt', useremail)
+                .then(res => {
+                    console.log(res.data)
+                    localStorage.setItem("acces-token", res.data)
+                })
         }
-        else{
+        else {
             console.log('user log out')
             setlooding(false)
             setuser(null)
@@ -65,6 +70,7 @@ const AuthProvider = ({ children }) => {
         LogOut,
         UpdateInfo,
         setuser,
+        UpdatePayment,
     }
     return (
         <AuthContext.Provider value={info}>
