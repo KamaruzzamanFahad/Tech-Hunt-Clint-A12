@@ -65,42 +65,26 @@ const DashBoard = () => {
               <NavLink
                 className={"flex items-center gap-3"}
                 activeclassname="active"
-                to={"/dashboard/adminhome"}
+                to={"/dashboard/statistics"}
               >
                 <IoMdHome className="text-3xl" />
-                <p className="uppercase font-semibold text-lg">Admin Home</p>
+                <p className="uppercase font-semibold text-lg">Statistics</p>
               </NavLink>
               <NavLink
                 className={"flex items-center gap-3 mt-5"}
                 activeclassname="active"
-                to={"/dashboard/additems"}
+                to={"/dashboard/manageusers"}
               >
                 <ImSpoonKnife className="text-3xl" />
-                <p className="uppercase font-semibold text-lg">dsdsda</p>
+                <p className="uppercase font-semibold text-lg">Manage Users</p>
               </NavLink>
               <NavLink
                 className={"flex items-center gap-3 mt-5"}
                 activeclassname="active"
-                to={"/dashboard/manageitems"}
+                to={"/dashboard/managecupons"}
               >
                 <FaList className="text-3xl" />
-                <p className="uppercase font-semibold text-lg">manage items</p>
-              </NavLink>
-              <NavLink
-                className={"flex items-center gap-3 mt-5"}
-                activeclassname="active"
-                to={"/dashboard/managebooking"}
-              >
-                <FaBook className="text-3xl" />
-                <p className="uppercase font-semibold text-lg">Manage bookings</p>
-              </NavLink>
-              <NavLink
-                className={"flex items-center gap-3 mt-5 mb-5"}
-                activeclassname="active"
-                to={"/dashboard/allusers"}
-              >
-                <FaUsers className="text-3xl" />
-                <p className="uppercase font-semibold text-lg">all users</p>
+                <p className="uppercase font-semibold text-lg">Manage Coupons</p>
               </NavLink>
             </>
           ) : userdata.role == 'moderator' ?

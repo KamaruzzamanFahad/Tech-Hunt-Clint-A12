@@ -18,6 +18,11 @@ import ProductDetils from "./Pages/ProductDetils";
 import UserProfile from "./Dashboard/UsersPages/UserProfile";
 import ProductReview from "./Dashboard/ModaratorPages/ProductReview";
 import ReportContent from "./Dashboard/ModaratorPages/ReportContent";
+import StatisticsPage from "./Dashboard/AdminPages/StatisticsPage";
+import ManageUsers from "./Dashboard/AdminPages/ManageUsers";
+import ManageCoupons from "./Dashboard/AdminPages/ManageCoupons";
+import AdminProtected from "./Protected/AdminProtected";
+import ModeratorProtected from "./Protected/ModeratorProtected";
 
 const router = createBrowserRouter([
   {
@@ -77,11 +82,24 @@ const router = createBrowserRouter([
       //moderator routs
       {
         path: '/dashboard/reviewproducts',
-        element: <ProtectedRout><ProductReview></ProductReview></ProtectedRout>
+        element: <ModeratorProtected><ProductReview></ProductReview></ModeratorProtected>
       },
       {
         path: '/dashboard/reportcontent',
-        element: <ProtectedRout><ReportContent></ReportContent></ProtectedRout>
+        element: <ModeratorProtected><ReportContent></ReportContent></ModeratorProtected>
+      },
+      //Admin routs
+      {
+        path: '/dashboard/statistics',
+        element: <AdminProtected><StatisticsPage></StatisticsPage></AdminProtected>
+      },
+      {
+        path: '/dashboard/manageusers',
+        element: <AdminProtected><ManageUsers></ManageUsers></AdminProtected>
+      },
+      {
+        path: '/dashboard/managecupons',
+        element: <AdminProtected><ManageCoupons></ManageCoupons></AdminProtected>
       },
     ]
   }
