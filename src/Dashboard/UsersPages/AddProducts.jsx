@@ -8,6 +8,8 @@ import TagsInput from 'react-tagsinput'
 
 import 'react-tagsinput/react-tagsinput.css'
 import useAxiousSecure from '../../hooks/useAxiousSecure';
+import usePayment from '../../hooks/usePayment';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const AddProducts = () => {
@@ -21,6 +23,17 @@ const AddProducts = () => {
         setTags(tags);
     };
 
+    const [payment, refetch] = usePayment()
+    const [product, setproduct] = useState([])
+    useEffect(() => {
+        axiosSecure.get(`/myproduct?email=${user.email}`)
+            .then(res => {
+                setproduct(res.data)
+            })
+    }, [])
+    const isVerified = payment?.email == user?.email ? 'yes' : 'no';
+    const allownewproduct = isVerified == "yes" || product.length <= 0 ? true : false;
+
     const axiosSecure = useAxiousSecure()
 
     const handlesubmit = async (event) => {
@@ -28,41 +41,47 @@ const AddProducts = () => {
         const form = event.target;
 
 
-        const Image = form.image.files[0];
 
-        const formData = new FormData();
-        formData.append("image", Image);
-        const res = await axios.post(ImgBBApi, formData, {
-            headers: {
-                'content-type': 'multipart/form-data'
+        if (allownewproduct) {
+
+            const Image = form.image.files[0];
+
+            const formData = new FormData();
+            formData.append("image", Image);
+            const res = await axios.post(ImgBBApi, formData, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+            if (res.data.success && res.data.data.url) {
+                const name = form.name.value;
+                const image = res.data.data.url;
+                const detils = form.detils.value;
+                const ProductLink = form.ProductLink.value;
+                const OwnerName = user.displayName;
+                const OwnerEmail = user.email;
+                const OwnerImage = user.photoURL;
+                const Tags = tags;
+                const Time = new Date();
+                const Status = 'pending';
+                const votes = [];
+                const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
+
+                axiosSecure.post('/addproduct', item,)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            form.reset();
+                            Swal.fire({
+                                title: 'Success !',
+                                text: 'Service Added Successfully',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            })
+                        }
+                    })
             }
-        })
-        if (res.data.success && res.data.data.url) {
-            const name = form.name.value;
-            const image = res.data.data.url;
-            const detils = form.detils.value;
-            const ProductLink = form.ProductLink.value;
-            const OwnerName = user.displayName;
-            const OwnerEmail = user.email;
-            const OwnerImage = user.photoURL;
-            const Tags = tags;
-            const Time = new Date();
-            const Status = 'pending';
-            const votes = [];
-            const item = { name, detils, ProductLink, Tags, image, OwnerName, OwnerEmail, OwnerImage, Time, Status, votes }
-
-            axiosSecure.post('/addproduct', item,)
-                .then(res => {
-                    if (res.data.insertedId) {
-                        form.reset();
-                        Swal.fire({
-                            title: 'Success !',
-                            text: 'Service Added Successfully',
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                        })
-                    }
-                })
+        } else {
+            toast.error('Product add limit exceeded. Without a membership, users can upload only one product. Take membership from the MY PROFILE section for unlimited product uploads')
         }
 
 
@@ -82,6 +101,7 @@ const AddProducts = () => {
 
     return (
         <div className='px-[0%] sm:px-[10%]  w-full md:pt-10'>
+            <ToastContainer />
             <Helmet>
                 <title>Add Product </title>
             </Helmet>

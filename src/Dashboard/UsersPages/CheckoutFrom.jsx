@@ -13,7 +13,10 @@ const CheckoutFrom = () => {
     const [tranjectionid, settranjectionid] = useState('')
     const axiosSecure = useAxiousSecure();
     const { user, UpdatePayment } = useContext(AuthContext)
-    const price = 10;
+
+    const price = localStorage.getItem("price") ? localStorage.getItem("price") : 50;
+
+    console.log(price)
     const [payment, refetch] = usePayment()
     const goto = useNavigate()
     useEffect(() => {

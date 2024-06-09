@@ -63,7 +63,7 @@ const ManageUsers = () => {
                     <tbody>
                         {
                             product.map((item, i) => (
-                                <tr>
+                                <tr key={i}>
                                     <td>
                                         <div className="flex items-center gap-3">
                                             <div>

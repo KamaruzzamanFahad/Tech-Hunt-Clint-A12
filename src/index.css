@@ -4,23 +4,29 @@
   font-weight: 400;
 
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-a.active{
+
+a.active {
   color: #28C2FA;
 }
 
-a{
+a {
   color: #034EA2;
 }
-body {
 
-}
+body {}
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+.Lato {
+  font-family: "Lato", sans-serif;
 }
 
 button {
@@ -33,11 +39,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-

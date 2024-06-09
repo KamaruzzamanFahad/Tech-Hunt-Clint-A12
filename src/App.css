@@ -1,4 +1,7 @@
-
-a.active{
+a.active {
     color: #28C2FA;
+}
+
+.Lato {
+    font-family: "Lato", sans-serif;
 }
