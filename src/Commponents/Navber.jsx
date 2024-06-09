@@ -27,8 +27,8 @@ const Navber = () => {
                 })
     }, [user])
 
-
-
+    const screewidth = window.innerWidth;
+    console.log(screewidth)
     return (
         <div className='py-5'>
 
@@ -48,7 +48,8 @@ const Navber = () => {
                             <li><NavLink to={'/products'}>Products</NavLink></li>
                         </ul>
                     </div>
-                    <Link to={'/'}>
+                    
+                    <Link hidden={screewidth < 500 && !user?.email ?  true : false} to={'/'}>
                         <div>
                             <img className='w-32' src="/techhunt.png" alt="" />
                         </div>
@@ -78,7 +79,7 @@ const Navber = () => {
                             </div>
                         </>
                             : <div className='flex justify-end items-center flex-row'>
-                                <NavLink to={'/login'}><button className=" text-black bg-[#2BC7FA]">Log In</button></NavLink>
+                                <NavLink to={'/login'}><button className=" w-28 text-black bg-[#2BC7FA]">Log In</button></NavLink>
                                 <NavLink to={'/register'}><button className=" text-black bg-[#2BC7FA] ml-4">Register</button></NavLink>
                             </div>
 

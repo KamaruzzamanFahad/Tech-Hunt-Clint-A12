@@ -50,7 +50,7 @@ const MyProduct = () => {
     }
 
     return (
-        <div className='w-full md:px-40 md:mt-20'>
+        <div className='w-full  md:pl-10 lg:px-32 xl:px-40 md:mt-20 '>
 
             <Helmet>
                 <title>My Product</title>

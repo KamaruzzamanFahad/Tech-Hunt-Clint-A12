@@ -47,20 +47,20 @@ const UserProfile = () => {
             })
     }
     return (
-        <div className='w-full md:ml-16 lg:p-40'>
+        <div className='w-full lg:ml-12 lg:p-5 xl:ml-16 xl:p-40'>
             <ToastContainer />
             <Helmet>
                 <title>My Profile</title>
             </Helmet>
-            <div className='flex flex-col bg-[#E2FBFF] justify-center items-center p-20 py-40 w-full'>
-                <img src={user.photoURL} alt="" />
+            <div className='flex flex-col bg-[#E2FBFF] justify-center items-center p-20 py-32 w-full'>
+                <img src={user.photoURL} alt="" className='max-w-24' />
                 <h1 className='text-center text-3xl sm:text-5xl'>{user.displayName}</h1>
                 <p>{user.email}</p>
                 {
                     payment?.email == user.email ? <p className='font-bold text-[#000000bd]'>Subscription Status: <span className='text-black'>Verified</span></p> :
                         <div className='flex justify-center flex-col items-center'>
                             <div >
-                                <form onSubmit={handlediscount} className='flex justify-center items-center gap-4 m-5'>
+                                <form onSubmit={handlediscount} className='flex flex-col sm:flex-row justify-center items-center gap-4 m-5'>
                                     <input required placeholder='Enter coupon ' type="text" name="price" id="" className='p-2' />
                                     <button className='bg-black text-white'>Discount</button>
                                 </form>

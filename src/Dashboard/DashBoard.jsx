@@ -36,7 +36,7 @@ const DashBoard = () => {
   console.log(divHeight)
 
   return (
-    <div ref={divRef} className="relative flex flex-col md:flex-row h-fit">
+    <div ref={divRef} className="relative flex flex-col md:flex-row h-[100vh]">
       <Helmet>
         <title>Dasshboard</title>
       </Helmet>
@@ -48,7 +48,7 @@ const DashBoard = () => {
         className={`fixed inset-y-0 left-0 bg-gray-100  z-[10] transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 w-full md:w-72 md:h-full bg-transparent`}
       >
-        <div className={`w-[350px] flex flex-col gap-4 cinzel bg-[#ffe6a1] p-10 bashbord  h-[${divHeight}px]`}>
+        <div className={`w-[350px] flex flex-col gap-4 cinzel bg-[#ffe6a1] p-10 bashbord  h-full`}>
           <div className="w-full flex flex-col gap-1 justify-center items-center mb-10">
             <img src={user.photoURL} alt="" className="w-20" />
             <h1 className="text-3xl text-center">{user.displayName}</h1>
@@ -133,9 +133,9 @@ const DashBoard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow p-4">
-        <div className=" flex flex-1 justify-center">
-          <Outlet></Outlet>
+      <div className="flex-grow p-4 overflow-y-scroll">
+        <div className=" flex flex-1 justify-center  ">
+          <Outlet ></Outlet>
         </div>
       </div>
     </div >

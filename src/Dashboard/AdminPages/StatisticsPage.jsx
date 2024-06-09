@@ -40,7 +40,7 @@ const StatisticsPage = () => {
 
 
     return (
-        <div className='flex justify-center items-center w-full h-[100vh]'>
+        <div className='flex justify-center md:ml-10 items-center w-full h-[100vh]'>
             <Helmet>
                 <title>Statistics</title>
             </Helmet>

@@ -44,7 +44,7 @@ const ManageUsers = () => {
 
 
     return (
-        <div className='w-full md:px-40 md:mt-20'>
+        <div className='overflow-x-scroll w-full md:pl-10 lg:pl-20 md:mt-20'>
             <Helmet>
                 <title>Manage Users</title>
             </Helmet>
@@ -76,10 +76,10 @@ const ManageUsers = () => {
                                         <p>{item.email}</p>
                                     </td>
                                     <th>
-                                        <button disabled={item.role == 'moderator' ? true : false} onClick={() => handleupdatestatus(item._id, 'moderator')} className="btn btn-ghost btn-xs bg-[#debbff96]">Make Moderator</button>
+                                        <button disabled={item.role == 'moderator' ? true : false} onClick={() => handleupdatestatus(item._id, 'moderator')} className="btn btn-ghost btn-xs bg-[#debbff96] w-32">Make Moderator</button>
                                     </th>
                                     <th>
-                                        <button disabled={item.role == 'admin' ? true : false} onClick={() => handleupdatestatus(item._id, 'admin')} className="btn btn-ghost btn-xs bg-[#bbe4ff96]">Make Admin</button>
+                                        <button disabled={item.role == 'admin' ? true : false} onClick={() => handleupdatestatus(item._id, 'admin')} className="btn btn-ghost btn-xs w-24 bg-[#bbe4ff96]">Make Admin</button>
                                     </th>
                                 </tr>
                             ))

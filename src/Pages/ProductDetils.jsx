@@ -127,8 +127,8 @@ const ProductDetils = () => {
                             <div className='px-3'></div>
 
 
-                            <div disabled={OwnerEmail == user?.email || Report?.includes(user?.email) && true} onClick={() => handlereport(_id)} className={`btn bg-[#C2F3FD] hover:bg-transparent`}>Report
-                                {Report?.includes(user?.email) ? <MdReport className='text-2xl' /> : <MdOutlineReport className='text-2xl' />}
+                            <div disabled={OwnerEmail == user?.email || Report?.includes(user?.email) && true} onClick={() => handlereport(_id)} className={`btn bg-[#C2F3FD] hover:bg-transparent mt-3 sm:mt-0`}>Report
+                                {Report?.includes(user?.email) ? <MdReport className='text-2xl ' /> : <MdOutlineReport className='text-2xl' />}
                             </div>
                         </div>
 

@@ -142,7 +142,7 @@ const ManageCoupons = () => {
             </div>
 
             <div>
-                <div className='md:px-20'>
+                <div className='md:px-20 m-5 sm:ml-14'>
                     <h1 className='text-3xl py-2  text-center'>Add Coupon</h1>
 
                     <dialog id="my_modal_4" className="modal">

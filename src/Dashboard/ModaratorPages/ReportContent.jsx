@@ -60,7 +60,7 @@ const ReportContent = () => {
     }
 
     return (
-        <div className='w-full md:px-40 md:mt-20'>
+        <div className='w-full  md:pl-10 lg:px-20 xl:px-36 md:mt-20'>
             <Helmet>
                 <title>Reported Content</title>
             </Helmet>
@@ -82,7 +82,7 @@ const ReportContent = () => {
                                         <p>{item.reportedProductName}</p>
                                     </td>
                                     <th>
-                                        <button onClick={() => goto(`/product/${item.reportedProductId}`)} className="btn btn-ghost btn-xs bg-[#bbffe696]">View Details</button>
+                                        <button onClick={() => goto(`/product/${item.reportedProductId}`)} className="btn btn-ghost btn-xs bg-[#bbffe696] w-24">View Details</button>
                                     </th>
                                     <th>
                                         <button disabled={item.Status == 'featured' ? true : false} onClick={() => handledelet(item.reportedProductId, item._id)} className="btn btn-ghost btn-xs bg-[#debbff96]">Delete</button>

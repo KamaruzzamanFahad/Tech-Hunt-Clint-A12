@@ -39,7 +39,7 @@ const ProductReview = () => {
 
 
     return (
-        <div className='w-full md:px-40 md:mt-20'>
+        <div className='w-full  md:pl-10 lg:px-20 xl:px-36 md:mt-20'>
             <Helmet>
                 <title>Product Review</title>
             </Helmet>
@@ -73,10 +73,10 @@ const ProductReview = () => {
                                         </div>
                                     </td>
                                     <th>
-                                        <button onClick={() => goto(`/product/${item._id}`)} className="btn btn-ghost btn-xs bg-[#bbffe696]">View Details</button>
+                                        <button onClick={() => goto(`/product/${item._id}`)} className="btn btn-ghost btn-xs bg-[#bbffe696] w-24">View Details</button>
                                     </th>
                                     <th>
-                                        <button disabled={item.Status == 'featured' ? true : false} onClick={() => handleupdatestatus(item._id, 'featured')} className="btn btn-ghost btn-xs bg-[#debbff96]">Make Featured</button>
+                                        <button disabled={item.Status == 'featured' ? true : false} onClick={() => handleupdatestatus(item._id, 'featured')} className="btn btn-ghost btn-xs bg-[#debbff96] w-28">Make Featured</button>
                                     </th>
                                     <th>
                                         <button disabled={item.Status == 'accepted' ? true : false} onClick={() => handleupdatestatus(item._id, 'accepted')} className="btn btn-ghost btn-xs bg-[#bbe4ff96]">Accept</button>
