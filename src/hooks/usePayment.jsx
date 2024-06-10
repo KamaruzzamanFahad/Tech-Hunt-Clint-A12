@@ -11,7 +11,13 @@ const usePayment = () => {
         queryKey: ['payment'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/payment?email=${user.email}`)
-            return res.data;
+            if (res.data == '') {
+                return 'new';
+            } else {
+                return res.data;
+            }
+
+
         }
     })
     return [payment, refetch]

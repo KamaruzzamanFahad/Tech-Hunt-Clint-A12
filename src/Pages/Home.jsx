@@ -41,8 +41,8 @@ const Home = () => {
                         {
                             cupondata.map((item, i) => (
 
-                                <SwiperSlide>
-                                    <div key={i} className='w-[420px] relative'>
+                                <SwiperSlide key={i}>
+                                    <div className='w-[420px] relative'>
                                         <img src="/cuponn.png" alt="" />
                                         <h1 className='absolute top-16 left-12 Lato font-extrabold text-6xl text-white'>${item.DiscountAmount}</h1>
                                         <h1 className='absolute top-11 right-[54px] Lato font-bold text-[33px] text-[#d98d1a]'>{item.CouponCode}</h1>

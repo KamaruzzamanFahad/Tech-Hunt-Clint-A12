@@ -12,23 +12,41 @@ const Navber = () => {
     const [dashbordlink, setdashbordlink] = useState('/dashboard')
 
     useEffect(() => {
-        user?.email &&
-            axiosSecure.get(`/user?email=${user.email}`)
-                .then(res => {
-                    if (res.data.role == "user") {
-                        setdashbordlink('/dashboard/myprofile')
-                    } else if (res.data.role == 'moderator') {
-                        setdashbordlink('/dashboard/reviewproducts')
-                    } else if (res.data.role == 'admin') {
-                        setdashbordlink('/dashboard/statistics')
+        const fetchUserRole = async () => {
+            try {
+                if (user?.email) {
+                    const res = await axiosSecure.get(`/user?email=${user.email}`);
+                    if (res.data && res.data.role) {
+                        switch (res.data.role) {
+                            case 'user':
+                                setdashbordlink('/dashboard/myprofile');
+                                break;
+                            case 'moderator':
+                                setdashbordlink('/dashboard/reviewproducts');
+                                break;
+                            case 'admin':
+                                setdashbordlink('/dashboard/statistics');
+                                break;
+                            default:
+                                setdashbordlink('/dashboard');
+                        }
                     } else {
-                        setdashbordlink('/dashboard')
+                        console.error('Invalid response data:', res.data);
+                        fetchUserRole();
+                        setdashbordlink('/dashboard'); // Fallback link in case of invalid data
                     }
-                })
-    }, [user])
+                }
+            } catch (err) {
+                console.error('Error fetching user role:', err);
+                fetchUserRole();
+                setdashbordlink('/dashboard'); // Fallback link in case of error
+            }
+        };
+
+        fetchUserRole();
+    }, [user]);
 
     const screewidth = window.innerWidth;
-    console.log(screewidth)
     return (
         <div className='py-5'>
 
@@ -40,16 +58,12 @@ const Navber = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-[10]">
-                            <li><NavLink
-                                className={({ isActive, isPending }) =>
-                                    isPending ? "pending" : isActive ? "active" : ""
-                                }
-                                to={'/'}>Home</NavLink></li>
-                            <li><NavLink to={'/products'}>Products</NavLink></li>
+                            <NavLink activeclassname="active" className={'text-lg'} to={'/'}>Home</NavLink>
+                            <NavLink activeclassname="active" className={'text-lg'} to={'/products'}>Products</NavLink>
                         </ul>
                     </div>
-                    
-                    <Link hidden={screewidth < 500 && !user?.email ?  true : false} to={'/'}>
+
+                    <Link hidden={screewidth < 500 && !user?.email ? true : false} to={'/'}>
                         <div>
                             <img className='w-32' src="/techhunt.png" alt="" />
                         </div>
@@ -58,8 +72,8 @@ const Navber = () => {
                 <div className="navbar-center hidden lg:flex">
 
                     <ul className="menu menu-horizontal px-1">
-                        <li><NavLink to={'/'}>Home</NavLink></li>
-                        <li><NavLink to={'/products'}>Products</NavLink></li>
+                        <NavLink activeclassname="active" className={'text-lg mr-2'} to={'/'}>Home</NavLink>
+                        <NavLink activeclassname="active" className={'text-lg ml-2'} to={'/products'}>Products</NavLink>
                     </ul>
                 </div>
                 <div className="navbar-end">

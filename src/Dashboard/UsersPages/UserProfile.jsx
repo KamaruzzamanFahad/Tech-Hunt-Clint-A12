@@ -12,7 +12,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_PK)
 const UserProfile = () => {
     const { user } = useContext(AuthContext)
     const axiosSecure = useAxiousSecure()
-    const [payment, refetch] = usePayment()
+    const [payment, refetch] = usePayment(null)
     const [modalcode, setmodalcode] = useState(0)
     const [price, setprice] = useState(0)
 
@@ -46,6 +46,8 @@ const UserProfile = () => {
 
             })
     }
+    console.log(payment == '')
+    
     return (
         <div className='w-full lg:ml-12 lg:p-5 xl:ml-16 xl:p-40'>
             <ToastContainer />
@@ -57,7 +59,7 @@ const UserProfile = () => {
                 <h1 className='text-center text-3xl sm:text-5xl'>{user.displayName}</h1>
                 <p>{user.email}</p>
                 {
-                    payment?.email == user.email ? <p className='font-bold text-[#000000bd]'>Subscription Status: <span className='text-black'>Verified</span></p> :
+                   payment == '' ? '' : payment?.email == user.email ? <p className='font-bold text-[#000000bd]'>Subscription Status: <span className='text-black'>Verified</span></p> :
                         <div className='flex justify-center flex-col items-center'>
                             <div >
                                 <form onSubmit={handlediscount} className='flex flex-col sm:flex-row justify-center items-center gap-4 m-5'>

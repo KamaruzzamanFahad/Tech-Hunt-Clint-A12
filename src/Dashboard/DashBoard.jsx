@@ -33,7 +33,6 @@ const DashBoard = () => {
     }
   }, [window.innerHeight]);
 
-  console.log(divHeight)
 
   return (
     <div ref={divRef} className="relative flex flex-col md:flex-row h-[100vh]">

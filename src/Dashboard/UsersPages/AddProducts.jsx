@@ -10,6 +10,7 @@ import 'react-tagsinput/react-tagsinput.css'
 import useAxiousSecure from '../../hooks/useAxiousSecure';
 import usePayment from '../../hooks/usePayment';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddProducts = () => {
@@ -31,6 +32,7 @@ const AddProducts = () => {
                 setproduct(res.data)
             })
     }, [])
+    const goto = useNavigate()
     const isVerified = payment?.email == user?.email ? 'yes' : 'no';
     const allownewproduct = isVerified == "yes" || product.length <= 0 ? true : false;
 
@@ -77,6 +79,7 @@ const AddProducts = () => {
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             })
+                            goto('/dashboard/myproducts')
                         }
                     })
             }
@@ -111,25 +114,37 @@ const AddProducts = () => {
 
                 <form onSubmit={handlesubmit} action="" className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
 
-                    <div className='md:col-span-2'>
+                    <div className='col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Image</h2>
                         <input type="file" name='image' required className="file-inpu file-input-bordered w-full" />
                     </div>
-                    <div className='md:col-span-2'>
+                    <div className='col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Name</h2>
                         <input required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Name' name='name' />
                     </div>
-                    <div className='md:col-span-2'>
+                    <div className='col-span-2'>
                         <h2 className='mb-2 font-semibold'>Description</h2>
                         <textarea required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Product Description'></textarea>
                     </div>
-                    <div className='md:col-span-2'>
+                    <div className='col-span-2'>
                         <h2 className='mb-2 font-semibold'>Product Link</h2>
                         <input required className='w-full p-2 outline-none' type="text" placeholder='Enter Product Link' name='ProductLink' />
                     </div>
-                    <div>
-                        <h2 className='mb-2 font-semibold'>Tag</h2>
+                    <div className='col-span-2 lg:col-span-1'>
+                        <h2 className='mb-2 font-semibold '>Tag</h2>
                         <TagsInput required value={tags} onChange={handleChange} />
+                    </div>
+                    <div className='col-span-2 lg:col-span-1'>
+                        <h2 className='mb-2 font-semibold'>Owner Name</h2>
+                        <input disabled value={user.displayName} className='w-full p-2 outline-none bg-white' type="text" placeholder='Enter Product Link' name='ProductLink' />
+                    </div>
+                    <div className='col-span-2 lg:col-span-1'>
+                        <h2 className='mb-2 font-semibold'>Owner Image</h2>
+                        <input disabled value={user.photoURL} className='w-full p-2 outline-none bg-white' type="text" placeholder='Enter Product Link' name='ProductLink' />
+                    </div>
+                    <div className='col-span-2 lg:col-span-1'>
+                        <h2 className='mb-2 font-semibold'>Owner Email</h2>
+                        <input disabled value={user.email} className='w-full p-2 outline-none bg-white' type="text" placeholder='Enter Product Link' name='ProductLink' />
                     </div>
                     <button className='md:col-span-2 bg-[#2dcafa] text-[#ffffff] rounded-xl font-bold'>Add Product</button>
                 </form>

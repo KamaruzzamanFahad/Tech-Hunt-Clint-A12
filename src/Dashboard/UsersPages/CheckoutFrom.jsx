@@ -16,7 +16,6 @@ const CheckoutFrom = () => {
 
     const price = localStorage.getItem("price") ? localStorage.getItem("price") : 50;
 
-    console.log(price)
     const [payment, refetch] = usePayment()
     const goto = useNavigate()
     useEffect(() => {
