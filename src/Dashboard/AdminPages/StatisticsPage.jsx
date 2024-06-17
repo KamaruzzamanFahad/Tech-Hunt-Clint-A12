@@ -2,8 +2,8 @@ import React, { PureComponent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend, BarChart, CartesianGrid, XAxis, YAxis, Bar } from 'recharts';
 import useAxiousSecure from '../../hooks/useAxiousSecure';
-import { FaTruck, FaUsers } from 'react-icons/fa';
-import { IoWallet, IoWalletSharp } from 'react-icons/io5';
+import { FaUsers } from 'react-icons/fa';
+import { IoWallet } from 'react-icons/io5';
 import { SiCodechef } from 'react-icons/si';
 import { MdWorkspacePremium } from "react-icons/md";
 
@@ -74,7 +74,6 @@ const StatisticsPage = () => {
             amt: 2181,
         },
     ];
-    console.log('hii')
 
     const getPath = (x, y, width, height) => {
         return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
