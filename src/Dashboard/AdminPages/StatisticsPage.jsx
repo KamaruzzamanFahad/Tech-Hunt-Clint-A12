@@ -74,6 +74,7 @@ const StatisticsPage = () => {
             amt: 2181,
         },
     ];
+    console.log('hii')
 
     const getPath = (x, y, width, height) => {
         return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
