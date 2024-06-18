@@ -14,7 +14,7 @@ const data = [
     { name: 'Group D', value: 200 },
 ];
 
-
+console.log('hello')
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
